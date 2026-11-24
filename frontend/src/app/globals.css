@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Nazar Rakho tokens. Calm neutrals, one accent (deep emerald). */
+:root {
+  --background: #fafaf9;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-hover: #fafaf9;
+  --muted: #f4f4f2;
+  --mint: #effaf5;
+  --primary: #0b7a5a;
+  --primary-hover: #086449;
+  --primary-foreground: #ffffff;
+  --foreground: #18181b;
+  --muted-foreground: #6b6b72;
+  --subtle: #a1a1aa;
+  --border: #ececea;
+  --border-strong: #e0e0dc;
+  --danger: #c2410c;
+  --warning: #a16207;
+  --info: #3f3f46;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgb(24 24 27 / 0.04);
+  --shadow-md: 0 1px 2px rgb(24 24 27 / 0.04), 0 4px 16px -8px rgb(24 24 27 / 0.08);
+  --shadow-lg: 0 1px 2px rgb(24 24 27 / 0.04), 0 24px 48px -24px rgb(24 24 27 / 0.18);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-muted: var(--muted);
+  --color-mint: var(--mint);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-instrument), Georgia, serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* In the base layer so Tailwind utilities (e.g. outline-none, font-semibold) can override these. */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html,
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  body {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-feature-settings: "cv11", "ss03";
+    letter-spacing: -0.011em;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgb(11 122 90 / 0.14);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(24 24 27 / 0.12) transparent;
+}
+
+/* Hosts the Nexconn ChatUI web components; they size to their parent. */
+.nexconn-host {
+  height: 100%;
+  width: 100%;
+  background: var(--surface);
+}
+
+/* ---------- 3D (landing product shot only) ---------- */
+.scene-3d {
+  perspective: 1600px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+/* Tilt3D writes --rx/--ry (deg) and --gx/--gy (%). */
+.tilt-3d {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+.tilt-3d[data-active="true"] {
+  transition-duration: 0.15s;
+}
+.tilt-glare {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(500px circle at var(--gx, 50%) var(--gy, 0%), rgb(255 255 255 / 0.35), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tilt-3d[data-active="true"] .tilt-glare {
+  opacity: 1;
+}
+.depth-1 {
+  transform: translateZ(30px);
+}
+.depth-2 {
+  transform: translateZ(60px);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-card-in {
+  animation: card-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .tilt-3d {
+    transform: none !important;
+  }
+}

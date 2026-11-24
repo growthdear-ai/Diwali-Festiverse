@@ -1,0 +1,28 @@
+# Environment credentials and local overrides
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+*.db
+*.db-*
+
+# Node.js and generated frontend output
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Nested local Git metadata
+frontend/.git/

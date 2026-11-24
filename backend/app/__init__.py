@@ -1,0 +1,1 @@
+"""Nazar Rakho backend."""
